@@ -1,8 +1,12 @@
 name: Assign Custom Reviewers
 
+permissions:
+    contents: read
+    pull-requests: write
+
 on:
   pull_request:
-    types: [opened, reopened, ready_for_review]
+    types: [opened, reopened, ready_for_review, synchronize, edited]
 
 jobs:
   assign-reviewers:
@@ -14,15 +18,14 @@ jobs:
         with:
           branch: 'main'
           reviewers: 'karpikpl,firrasaltaher'
-          team-reviewers: '@cody-test-org/everyone'
-          token: ${{ secrets.GITHUB_TOKEN }}
+          team-reviewers: 'everyone'
 
       - name: Assign reviewers for develop branch
         if: github.event.pull_request.base.ref == 'develop'
         uses: firrasaltaher/gh-custom-reviewers-branch-action@main
         with:
           branch: 'develop'
-          team-reviewers: '@cody-test-org/my-secrets-team'
+          team-reviewers: 'my-secrets-team'
 
       - name: Assign reviewers for release branches
         if: startsWith(github.event.pull_request.base.ref, 'release/')
@@ -30,4 +33,4 @@ jobs:
         with:
           branch: ${{ github.event.pull_request.base.ref }}
           reviewers: 'cherryjain-msft'
-          team-reviewers: '@cody-test-org/admins'          
+          team-reviewers: 'admins'
