@@ -1,0 +1,33 @@
+name: Assign Custom Reviewers
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review]
+
+jobs:
+  assign-reviewers:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assign reviewers for main branch
+        if: github.event.pull_request.base.ref == 'main'
+        uses: firrasaltaher/gh-custom-reviewers-branch-action@main
+        with:
+          branch: 'main'
+          reviewers: 'karpikpl,firrasaltaher'
+          team-reviewers: '@cody-test-org/everyone'
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Assign reviewers for develop branch
+        if: github.event.pull_request.base.ref == 'develop'
+        uses: firrasaltaher/gh-custom-reviewers-branch-action@main
+        with:
+          branch: 'develop'
+          team-reviewers: '@cody-test-org/my-secrets-team'
+
+      - name: Assign reviewers for release branches
+        if: startsWith(github.event.pull_request.base.ref, 'release/')
+        uses: firrasaltaher/gh-custom-reviewers-branch-action@main
+        with:
+          branch: ${{ github.event.pull_request.base.ref }}
+          reviewers: 'cherryjain-msft'
+          team-reviewers: '@cody-test-org/admins'          
