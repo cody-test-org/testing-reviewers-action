@@ -1,7 +1,8 @@
 name: Assign Custom Reviewers
 
 permissions:
-  pull-requests: write
+    contents: read
+    pull-requests: write
 
 on:
   pull_request:
