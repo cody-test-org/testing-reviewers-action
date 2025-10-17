@@ -2,7 +2,7 @@ name: Assign Custom Reviewers
 
 permissions:
   pull-requests: write
-  
+
 on:
   pull_request:
     types: [opened, reopened, ready_for_review, synchronize, edited]
@@ -18,7 +18,6 @@ jobs:
           branch: 'main'
           reviewers: 'karpikpl,firrasaltaher'
           team-reviewers: '@cody-test-org/everyone'
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Assign reviewers for develop branch
         if: github.event.pull_request.base.ref == 'develop'
