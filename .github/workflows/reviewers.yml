@@ -19,6 +19,7 @@ jobs:
           branch: 'main'
           reviewers: 'karpikpl,firrasaltaher'
           team-reviewers: 'everyone'
+          token: ${{ secrets.REVIEWERS_PAT }}
 
       - name: Assign reviewers for develop branch
         if: github.event.pull_request.base.ref == 'develop'
@@ -26,6 +27,7 @@ jobs:
         with:
           branch: 'develop'
           team-reviewers: 'my-secrets-team'
+          token: ${{ secrets.REVIEWERS_PAT }}
 
       - name: Assign reviewers for release branches
         if: startsWith(github.event.pull_request.base.ref, 'release/')
@@ -34,3 +36,4 @@ jobs:
           branch: ${{ github.event.pull_request.base.ref }}
           reviewers: 'cherryjain-msft'
           team-reviewers: 'admins'
+          token: ${{ secrets.REVIEWERS_PAT }}
