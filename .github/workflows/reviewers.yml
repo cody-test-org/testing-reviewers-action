@@ -18,14 +18,14 @@ jobs:
         with:
           branch: 'main'
           reviewers: 'karpikpl,firrasaltaher'
-          team-reviewers: 'cody-test-org/everyone'
+          team-reviewers: 'everyone'
 
       - name: Assign reviewers for develop branch
         if: github.event.pull_request.base.ref == 'develop'
         uses: firrasaltaher/gh-custom-reviewers-branch-action@main
         with:
           branch: 'develop'
-          team-reviewers: 'cody-test-org/my-secrets-team'
+          team-reviewers: 'my-secrets-team'
 
       - name: Assign reviewers for release branches
         if: startsWith(github.event.pull_request.base.ref, 'release/')
@@ -33,4 +33,4 @@ jobs:
         with:
           branch: ${{ github.event.pull_request.base.ref }}
           reviewers: 'cherryjain-msft'
-          team-reviewers: 'cody-test-org/admins'
+          team-reviewers: 'admins'
