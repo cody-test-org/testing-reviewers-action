@@ -10,7 +10,7 @@
 # https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
 
 # Global default owners - fallback for any files not covered below
-* @karpikpl
+* @firrasaltaher
 
 # Configuration files
-/.github/ @cody-carlson
+/.github/ @firrasaltaher
