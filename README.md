@@ -1,5 +1,6 @@
 # Deploy Logic App with Secured storage account having Private Endpoints
 
+> **Test PR to feature/foo**: Testing team reviewers action targeting feature/foo branch (no config).
 
 At present, we don't have an option to use the Azure portal to deploy Standard Logic App with secured storage account. However, we can work with ARM templates which let us to use the Storage account behind firewall for Logic App standard resource deployment.
 
