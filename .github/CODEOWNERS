@@ -1,0 +1,16 @@
+# CODEOWNERS file for dummy-repo
+# This file defines who owns different parts of the codebase.
+# 
+# Each line is a file pattern followed by one or more owners.
+# These owners will be the default assignees for pull requests
+# containing changes to the matching files.
+#
+# Order is important; the last matching pattern takes precedence.
+# For more information, see:
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Global default owners - fallback for any files not covered below
+* @karpikpl
+
+# Configuration files
+/.github/ @cody-carlson
