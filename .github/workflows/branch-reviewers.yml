@@ -145,6 +145,7 @@ jobs:
             // we'll accept any approval for now when teams are configured
 
             let approvedCount = 0;
+            const verifiedApprovers = [];
 
             // Count approvals from individual reviewers
             if (requiredReviewers.length > 0) {
@@ -152,20 +153,55 @@ jobs:
                 approvers.includes(reviewer)
               );
               approvedCount += approvedRequiredReviewers.length;
+              verifiedApprovers.push(...approvedRequiredReviewers);
 
               if (approvedRequiredReviewers.length > 0) {
                 core.info(`✓ Approved by individual reviewers: ${approvedRequiredReviewers.join(', ')}`);
               }
             }
 
-            // For teams, if we have any approvals and teams are required, count them
-            // Note: This is simplified - in production you'd want to verify team membership
+            // For teams, verify that approvers are actually team members
             if (requiredTeams.length > 0 && approvers.length > 0) {
               core.info(`✓ Teams configured: ${requiredTeams.join(', ')}`);
-              core.info(`✓ Checking if approvers are team members (any approval counts for teams)`);
-              // Count the approval if we have teams configured
-              if (requiredReviewers.length === 0 && approvers.length > 0) {
-                approvedCount = approvers.length;
+              core.info(`✓ Checking team membership for approvers: ${approvers.join(', ')}`);
+
+              // Check each approver's team membership
+              for (const approver of approvers) {
+                // Skip if already counted as an individual reviewer
+                if (verifiedApprovers.includes(approver)) {
+                  continue;
+                }
+
+                // Check if approver is a member of any required team
+                let isTeamMember = false;
+                for (const teamSlug of requiredTeams) {
+                  const teamName = teamSlug.replace(`${context.repo.owner}/`, '');
+
+                  try {
+                    await github.rest.teams.getMembershipForUserInOrg({
+                      org: context.repo.owner,
+                      team_slug: teamName,
+                      username: approver
+                    });
+
+                    core.info(`✓ ${approver} is a member of ${teamSlug}`);
+                    isTeamMember = true;
+                    break; // Found membership, no need to check other teams
+                  } catch (error) {
+                    // Not a member of this team, continue checking
+                    core.info(`  ${approver} is not a member of ${teamSlug}`);
+                  }
+                }
+
+                if (isTeamMember) {
+                  approvedCount++;
+                  verifiedApprovers.push(approver);
+                }
+              }
+
+              if (verifiedApprovers.length > (requiredReviewers.length > 0 ? requiredReviewers.filter(r => approvers.includes(r)).length : 0)) {
+                const teamApprovers = verifiedApprovers.filter(a => !requiredReviewers.includes(a));
+                core.info(`✓ Verified team member approvals: ${teamApprovers.join(', ')}`);
               }
             }
 
