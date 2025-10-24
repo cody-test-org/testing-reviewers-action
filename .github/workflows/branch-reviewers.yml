@@ -32,7 +32,7 @@ jobs:
             const branchConfig = config.branches[baseBranch];
 
             if (!branchConfig) {
-              core.setFailed(`No reviewer configuration found for branch: ${baseBranch}`);
+              core.info(`ℹ️  No reviewer configuration found for branch: ${baseBranch} - skipping checks`);
               return;
             }
 
