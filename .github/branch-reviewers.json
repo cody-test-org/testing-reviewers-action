@@ -1,0 +1,16 @@
+{
+  "branches": {
+    "main": {
+      "teams": ["cody-test-org/admins", "cody-test-org/my-secrets-team"],
+      "require_minimum": 1
+    },
+    "develop": {
+      "teams": ["cody-test-org/admins"],
+      "require_minimum": 1
+    },
+    "release/v1": {
+      "teams": ["cody-test-org/my-secrets-team"],
+      "require_minimum": 1
+    }
+  }
+}
