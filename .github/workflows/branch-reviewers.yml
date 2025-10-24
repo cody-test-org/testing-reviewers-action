@@ -46,6 +46,7 @@ jobs:
             return branchConfig;
 
       - name: Auto-assign reviewers
+        if: steps.load-config.outputs.config != ''
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.REVIEWERS_PAT }}
@@ -109,6 +110,7 @@ jobs:
             }
 
       - name: Check required approvals
+        if: steps.load-config.outputs.config != ''
         uses: actions/github-script@v7
         with:
           script: |
