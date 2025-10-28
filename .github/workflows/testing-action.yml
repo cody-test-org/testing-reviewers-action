@@ -19,4 +19,4 @@ jobs:
       - name: Assign Branch Reviewers
         uses: karpikpl/assign-branch-reviewers-action@main
         with:
-            github-pat: ${{ secrets.REVIEWER_PAT }}
+          github-pat: ${{ secrets.REVIEWER_PAT }}
