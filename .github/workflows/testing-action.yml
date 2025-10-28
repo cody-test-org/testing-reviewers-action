@@ -1,0 +1,22 @@
+name: Branch Reviewers Action
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  pull_request_review:
+    types: [submitted, dismissed]
+
+jobs:
+  check-branch-reviewers:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Assign Branch Reviewers
+        uses: karpikpl/assign-branch-reviewers-action@main
+        with:
+            github-pat: ${{ secrets.REVIEWER_PAT }}
